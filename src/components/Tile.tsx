@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 
-export type TileValueType = number | null;
-
-interface TileProps {
-  value: TileValueType;
-  canMove: boolean;
-  onClick: () => void;
-}
+type StyledTileProps = {
+  $canMove: boolean;
+};
 
 const StyledTile = styled.button.withConfig({
   displayName: 'Tile',
-})<{ $canMove: boolean }>`
+})<StyledTileProps>`
   width: 4rem;
   height: 4rem;
   padding: 0px;
@@ -47,6 +43,14 @@ const StyledTile = styled.button.withConfig({
     transform: none;
   }
 `;
+
+export type TileValueType = number | null;
+
+interface TileProps {
+  value: TileValueType;
+  canMove: boolean;
+  onClick: () => void;
+}
 
 const Tile = ({ value, canMove, onClick }: TileProps) => {
   return (

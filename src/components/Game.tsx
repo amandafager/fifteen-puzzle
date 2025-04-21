@@ -16,9 +16,14 @@ const StyledGame = styled.div.withConfig({
   align-items: center;
 `;
 
+type GameGridProps = {
+  $cols: number;
+  $rows: number;
+};
+
 const GameGrid = styled.div.withConfig({
   displayName: 'GameGrid',
-})<{ $cols: number; $rows: number }>`
+})<GameGridProps>`
   display: grid;
   grid-template-rows: repeat(${(props) => props.$rows}, 1fr);
   grid-template-columns: repeat(${(props) => props.$cols}, 1fr);
