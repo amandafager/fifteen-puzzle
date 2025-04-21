@@ -37,20 +37,83 @@ const Game = () => {
     shuffleTiles(generateTiles(GRID_CONFIG.rows, GRID_CONFIG.cols))
   );
 
+  // Utility: Get row/col from index
+  const getTileCoords = (index: number) => ({
+    row: Math.floor(index / GRID_CONFIG.rows),
+    col: index % GRID_CONFIG.rows,
+  });
+
+  // Cache the empty index once per move to avoid recomputation
   const findEmptyTileIndex = () => tiles.findIndex((tile) => tile === null);
 
+  // Checks if clicked tile is in the same row or column as empty tile
   const canTileMove = (clickedIndex: number): boolean => {
     const emptyIndex = findEmptyTileIndex();
-    const clickedRow = Math.floor(clickedIndex / GRID_CONFIG.rows);
-    const clickedCol = clickedIndex % GRID_CONFIG.rows;
-    const emptyRow = Math.floor(emptyIndex / GRID_CONFIG.rows);
-    const emptyCol = emptyIndex % GRID_CONFIG.rows;
+    const { row: clickedRow, col: clickedCol } = getTileCoords(clickedIndex);
+    const { row: emptyRow, col: emptyCol } = getTileCoords(emptyIndex);
 
     return clickedRow === emptyRow || clickedCol === emptyCol;
   };
 
+  // Builds an array of tile indexes between the clicked and empty tile
+  const getTilesToMove = (
+    clickedIndex: number,
+    emptyIndex: number
+  ): number[] => {
+    const { row: clickedRow, col: clickedCol } = getTileCoords(clickedIndex);
+    const { row: emptyRow, col: emptyCol } = getTileCoords(emptyIndex);
+
+    const tilesToMove: number[] = [];
+
+    if (clickedRow === emptyRow) {
+      // Move horizontally
+      const start = Math.min(clickedCol, emptyCol);
+      const end = Math.max(clickedCol, emptyCol);
+      for (let col = start; col <= end; col++) {
+        tilesToMove.push(clickedRow * GRID_CONFIG.rows + col);
+      }
+    } else if (clickedCol === emptyCol) {
+      // Move vertically
+      const start = Math.min(clickedRow, emptyRow);
+      const end = Math.max(clickedRow, emptyRow);
+      for (let row = start; row <= end; row++) {
+        tilesToMove.push(row * GRID_CONFIG.rows + clickedCol);
+      }
+    }
+
+    return tilesToMove;
+  };
+
+  // Handles moving the tile values toward empty space
+  const moveTiles = (
+    tilesArray: TileValue[],
+    indexes: number[],
+    forward: boolean
+  ): void => {
+    if (forward) {
+      for (let i = indexes.length - 1; i > 0; i--) {
+        tilesArray[indexes[i]] = tilesArray[indexes[i - 1]];
+      }
+      tilesArray[indexes[0]] = null;
+    } else {
+      for (let i = 0; i < indexes.length - 1; i++) {
+        tilesArray[indexes[i]] = tilesArray[indexes[i + 1]];
+      }
+      tilesArray[indexes[indexes.length - 1]] = null;
+    }
+  };
+
   const handleOnClickTile = (clickedIndex: number): void => {
-    console.log('clickedIndex', clickedIndex);
+    if (!canTileMove(clickedIndex)) return;
+
+    const emptyIndex = findEmptyTileIndex();
+    const tilesToMove = getTilesToMove(clickedIndex, emptyIndex);
+    const newTiles = [...tiles];
+
+    const isForward = clickedIndex < emptyIndex;
+    moveTiles(newTiles, tilesToMove, isForward);
+
+    setTiles(newTiles);
   };
 
   const handleOnClickShuffle = (): void => {
