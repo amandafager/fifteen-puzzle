@@ -4,6 +4,7 @@ import Tile from '@/components/Tile';
 import { generateTiles, shuffleTiles } from '@/utils/tileUtils';
 import { GRID_CONFIG } from '@/config/gameConfig';
 import type { TileValue } from '@/types/game';
+import Button from '@/components/Button';
 
 type GameGridProps = {
   $cols: number;
@@ -29,12 +30,6 @@ const GameGrid = styled.div.withConfig({
   background-color: #dadada;
   border: 0.1rem solid #111111;
   border-radius: 0.2rem;
-`;
-
-const ShuffleButton = styled.button.withConfig({
-  displayName: 'ShuffleButton',
-})`
-  margin-top: 1rem;
 `;
 
 const Game = () => {
@@ -79,9 +74,7 @@ const Game = () => {
           />
         ))}
       </GameGrid>
-      <ShuffleButton onClick={handleOnClickShuffle}>
-        Shuffle Tiles
-      </ShuffleButton>
+      <Button onClick={handleOnClickShuffle}>Shuffle</Button>
     </StyledGame>
   );
 };

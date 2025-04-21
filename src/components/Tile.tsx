@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import type { TileValue } from '@/types/game';
+import { Button } from './Button';
 
 type StyledTileProps = {
   $canMove: boolean;
@@ -11,37 +12,15 @@ interface TileProps {
   onClick: () => void;
 }
 
-const StyledTile = styled.button.withConfig({
+const StyledTile = styled(Button).withConfig({
   displayName: 'Tile',
 })<StyledTileProps>`
   width: 4rem;
   height: 4rem;
-  padding: 0px;
-  margin: 0rem;
+  padding: 0;
+  margin: 0;
   font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
   cursor: ${(props) => (props.$canMove ? 'pointer' : 'not-allowed')};
-  background-color: rgba(1, 1, 1, 0.75);
-  border: none;
-  border-radius: 0.2rem;
-  transition: all 0.2s ease;
-
-  &:focus {
-    outline: 0.15rem solid #ff6b00;
-  }
-
-  &:focus-visible {
-    outline: 0.15rem solid #ff6b00;
-  }
-
-  &:hover {
-    background-color: rgba(1, 1, 1, 0.85);
-  }
-
-  &:active {
-    background-color: rgba(1, 1, 1, 0.95);
-  }
 
   &:disabled {
     cursor: default;
