@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import Tile from './Tile';
-
 import styled from 'styled-components';
 
 import { useState } from 'react';
 
-import { generateTiles, shuffleTiles } from '@/utils/generateShuffledTiles';
+import Tile, { TileValueType } from '@/components/Tile';
+
+import { generateTiles, shuffleTiles } from '@/utils/tileUtils';
 
 const StyledGame = styled.div.withConfig({
   displayName: 'Game',
@@ -29,11 +29,17 @@ const GameGrid = styled.div.withConfig({
   border-radius: 0.2rem;
 `;
 
-const GRID_ROWS = 4;
-const GRID_COLS = 4;
+const ShuffleButton = styled.button.withConfig({
+  displayName: 'ShuffleButton',
+})`
+  margin-top: 1rem;
+`;
 
 const Game = () => {
-  const [tiles, setTiles] = useState<(number | null)[]>([]);
+  const GRID_ROWS = 4;
+  const GRID_COLS = 4;
+
+  const [tiles, setTiles] = useState<TileValueType[]>([]);
 
   const findEmptyTileIndex = () => tiles.findIndex((tile) => tile === null);
 
@@ -53,10 +59,7 @@ const Game = () => {
   };
 
   const handleOnClickShuffle = () => {
-    setTiles((currentTiles) => {
-      const shuffledTiles = shuffleTiles([...currentTiles]);
-      return shuffledTiles;
-    });
+    setTiles(shuffleTiles(tiles));
   };
 
   useEffect(() => {
@@ -76,7 +79,9 @@ const Game = () => {
           />
         ))}
       </GameGrid>
-      <button onClick={handleOnClickShuffle}>Shuffle Tiles</button>
+      <ShuffleButton onClick={handleOnClickShuffle}>
+        Shuffle Tiles
+      </ShuffleButton>
     </StyledGame>
   );
 };

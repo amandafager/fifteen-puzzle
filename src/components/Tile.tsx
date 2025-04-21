@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+export type TileValueType = number | null;
+
 interface TileProps {
-  value: number | null;
+  value: TileValueType;
   canMove: boolean;
   onClick: () => void;
 }

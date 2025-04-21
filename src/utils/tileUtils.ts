@@ -1,6 +1,8 @@
-const generateTiles = (rows: number, cols: number): (number | null)[] => {
+import { TileValueType } from '@/components/Tile';
+
+const generateTiles = (rows: number, cols: number): TileValueType[] => {
   const totalTiles = rows * cols;
-  const tiles = [];
+  const tiles: TileValueType[] = [];
 
   // Add the numbered tiles starting from 1
   for (let i = 1; i < totalTiles; i++) {
@@ -12,14 +14,16 @@ const generateTiles = (rows: number, cols: number): (number | null)[] => {
   return tiles;
 };
 
-const shuffleTiles = (tiles: (number | null)[]): (number | null)[] => {
+const shuffleTiles = (tiles: TileValueType[]): TileValueType[] => {
+  const newTiles = [...tiles];
+
   // Shuffle the tiles
-  for (let i = tiles.length - 1; i > 0; i--) {
+  for (let i = newTiles.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+    [newTiles[i], newTiles[j]] = [newTiles[j], newTiles[i]];
   }
 
-  return tiles;
+  return newTiles;
 };
 
 export { generateTiles, shuffleTiles };
