@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:style": "stylelint \"src/**/*.{ts,tsx}\"",
+    "lint:style:fix": "stylelint \"src/**/*.{ts,tsx}\" --fix",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -27,7 +29,13 @@
     "eslint-plugin-styled-components-a11y": "^2.2.0",
     "eslint-plugin-styled-components-config": "^0.0.2",
     "globals": "^16.0.0",
+    "postcss-styled-syntax": "^0.7.1",
     "prettier": "^3.5.3",
+    "stylelint": "^16.18.0",
+    "stylelint-config-recess-order": "^6.0.0",
+    "stylelint-config-recommended": "^16.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"
