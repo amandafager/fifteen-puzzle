@@ -1,8 +1,15 @@
 import styled from 'styled-components';
+import type { TileValue } from '@/types/game';
 
 type StyledTileProps = {
   $canMove: boolean;
 };
+
+interface TileProps {
+  value: TileValue;
+  canMove: boolean;
+  onClick: () => void;
+}
 
 const StyledTile = styled.button.withConfig({
   displayName: 'Tile',
@@ -43,14 +50,6 @@ const StyledTile = styled.button.withConfig({
     transform: none;
   }
 `;
-
-export type TileValueType = number | null;
-
-interface TileProps {
-  value: TileValueType;
-  canMove: boolean;
-  onClick: () => void;
-}
 
 const Tile = ({ value, canMove, onClick }: TileProps) => {
   return (

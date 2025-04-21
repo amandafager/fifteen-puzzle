@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
-
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
-import { useState } from 'react';
-
-import Tile, { TileValueType } from '@/components/Tile';
-
+import Tile from '@/components/Tile';
 import { generateTiles, shuffleTiles } from '@/utils/tileUtils';
+import { GRID_CONFIG } from '@/config/gameConfig';
+import type { TileValue } from '@/types/game';
+
+type GameGridProps = {
+  $cols: number;
+  $rows: number;
+};
 
 const StyledGame = styled.div.withConfig({
   displayName: 'Game',
@@ -15,11 +17,6 @@ const StyledGame = styled.div.withConfig({
   flex-direction: column;
   align-items: center;
 `;
-
-type GameGridProps = {
-  $cols: number;
-  $rows: number;
-};
 
 const GameGrid = styled.div.withConfig({
   displayName: 'GameGrid',
@@ -41,40 +38,38 @@ const ShuffleButton = styled.button.withConfig({
 `;
 
 const Game = () => {
-  const GRID_ROWS = 4;
-  const GRID_COLS = 4;
-
-  const [tiles, setTiles] = useState<TileValueType[]>([]);
+  const [tiles, setTiles] = useState<TileValue[]>(() =>
+    shuffleTiles(generateTiles(GRID_CONFIG.rows, GRID_CONFIG.cols))
+  );
 
   const findEmptyTileIndex = () => tiles.findIndex((tile) => tile === null);
 
-  const canTileMove = (clickedIndex: number) => {
+  const canTileMove = (clickedIndex: number): boolean => {
     const emptyIndex = findEmptyTileIndex();
-    const clickedRow = Math.floor(clickedIndex / GRID_ROWS);
-    const clickedCol = clickedIndex % GRID_ROWS;
-    const emptyRow = Math.floor(emptyIndex / GRID_ROWS);
-    const emptyCol = emptyIndex % GRID_ROWS;
+    const clickedRow = Math.floor(clickedIndex / GRID_CONFIG.rows);
+    const clickedCol = clickedIndex % GRID_CONFIG.rows;
+    const emptyRow = Math.floor(emptyIndex / GRID_CONFIG.rows);
+    const emptyCol = emptyIndex % GRID_CONFIG.rows;
 
-    // Check if the clicked tile is in the same row or column as the empty tile
     return clickedRow === emptyRow || clickedCol === emptyCol;
   };
 
-  const handleOnClickTile = (clickedIndex: number) => {
+  const handleOnClickTile = (clickedIndex: number): void => {
     console.log('clickedIndex', clickedIndex);
   };
 
-  const handleOnClickShuffle = () => {
-    setTiles(shuffleTiles(tiles));
+  const handleOnClickShuffle = (): void => {
+    setTiles((currentTiles) => shuffleTiles([...currentTiles]));
   };
 
   useEffect(() => {
-    setTiles(shuffleTiles(generateTiles(GRID_ROWS, GRID_COLS)));
-  }, [GRID_ROWS, GRID_COLS]);
+    setTiles(shuffleTiles(generateTiles(GRID_CONFIG.rows, GRID_CONFIG.cols)));
+  }, [GRID_CONFIG.rows, GRID_CONFIG.cols]);
 
   return (
     <StyledGame>
       <h1>Fifteen Puzzle</h1>
-      <GameGrid $cols={GRID_COLS} $rows={GRID_ROWS}>
+      <GameGrid $cols={GRID_CONFIG.cols} $rows={GRID_CONFIG.rows}>
         {tiles.map((tile, index) => (
           <Tile
             key={tile ? `tile-${tile}` : `empty-${index}`}
