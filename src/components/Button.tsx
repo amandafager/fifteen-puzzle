@@ -4,7 +4,7 @@ export const Button = styled.button.withConfig({
   displayName: 'Button',
 })`
   padding: 1rem 3rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   font-size: 1rem;
   font-weight: bold;
   color: white;
@@ -12,10 +12,13 @@ export const Button = styled.button.withConfig({
   background-color: rgba(1, 1, 1, 0.75);
   border: none;
   border-radius: 0.2rem;
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
     background-color: rgba(1, 1, 1, 0.85);
+    transform: translateY(-0.1rem);
   }
 
   &:active {
