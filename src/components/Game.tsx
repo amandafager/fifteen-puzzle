@@ -6,7 +6,7 @@ import { GRID_CONFIG } from '@/config/gameConfig';
 import type { TileValue } from '@/types/game';
 import Button from '@/components/Button';
 import {
-  checkIfPuzzleSolved,
+  checkIfPuzzleIsSolved,
   canTileMove,
   getTilesToMove,
   moveTiles,
@@ -34,10 +34,8 @@ const GameGrid = styled.div.withConfig({
   grid-template-rows: repeat(${(props) => props.$rows}, 1fr);
   grid-template-columns: repeat(${(props) => props.$cols}, 1fr);
   gap: 0.2em;
-
   width: calc(25em);
   max-width: calc(100vw - 2em);
-
   padding: 0.5em;
   background-color: #dadada;
   border: 0.1em solid #111111;
@@ -68,7 +66,7 @@ const Game = () => {
     setTiles(newTiles);
     logPuzzleAnalysis(newTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
 
-    const isSolved = checkIfPuzzleSolved(newTiles);
+    const isSolved = checkIfPuzzleIsSolved(newTiles);
     if (isSolved) {
       setIsSolved(true);
       console.log('Congratulations! Puzzle solved!');
