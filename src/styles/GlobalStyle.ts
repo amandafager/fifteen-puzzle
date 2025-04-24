@@ -47,8 +47,8 @@ const GlobalStyle = createGlobalStyle`
   }
     
   :root {
+    width: 100%;
     font-family: 'Open Sans', system-ui, sans-serif;
-    font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
     color: #000000;
@@ -63,15 +63,21 @@ const GlobalStyle = createGlobalStyle`
   html {
     background-color: #ffffff;
   }
-
+ 
   body {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     min-height: 100vh;
     padding: 0;
     margin: 0;
   }
+
+   #root {
+    width: 100%;
+  }
+
 
   button {
     font-family: inherit;

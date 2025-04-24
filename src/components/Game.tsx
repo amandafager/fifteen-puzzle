@@ -25,21 +25,41 @@ const StyledGame = styled.div.withConfig({
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
 
 const GameGrid = styled.div.withConfig({
   displayName: 'GameGrid',
 })<GameGridProps>`
+  --grid-padding: 0.5em;
+  --total-width: min(90vw, 90vh, ${(props) => props.$cols * 60}px);
+  --content-width: calc(var(--total-width) - (var(--grid-padding) * 2));
+
   display: grid;
   grid-template-rows: repeat(${(props) => props.$rows}, 1fr);
   grid-template-columns: repeat(${(props) => props.$cols}, 1fr);
   gap: 0.2em;
-  width: calc(25em);
-  max-width: calc(100vw - 2em);
-  padding: 0.5em;
+  /* Responsive sizing that scales down on smaller screens */
+  width: var(--total-width);
+  height: calc(
+    var(--content-width) * ${(props) => props.$rows / props.$cols} +
+      (var(--grid-padding) * 2)
+  );
+  padding: var(--grid-padding);
   background-color: #dadada;
   border: 0.1em solid #111111;
   border-radius: 0.2em;
+
+  @media (min-width: 1024px) {
+    --total-width: min(100vw, 100vh, ${(props) => props.$cols * 75}px);
+    --content-width: calc(var(--total-width) - (var(--grid-padding) * 2));
+
+    width: var(--total-width);
+    height: calc(
+      var(--content-width) * ${(props) => props.$rows / props.$cols} +
+        (var(--grid-padding) * 2)
+    );
+  }
 `;
 
 const Game = () => {
@@ -86,7 +106,7 @@ const Game = () => {
 
   return (
     <StyledGame>
-      <h1>Fifteen Puzzle</h1>
+      <h1>React - n-pussel</h1>
       {isSolved && <h2>Puzzle solved!</h2>}
       <GameGrid $cols={GRID_CONFIG.cols} $rows={GRID_CONFIG.rows}>
         {tiles.map((tile, index) => (
@@ -98,7 +118,7 @@ const Game = () => {
           />
         ))}
       </GameGrid>
-      <Button onClick={handleOnClickShuffle}>Shuffle</Button>
+      <Button onClick={handleOnClickShuffle}>Slumpa</Button>
     </StyledGame>
   );
 };
