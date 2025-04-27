@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const Button = styled.button.withConfig({
   displayName: 'Button',
 })`
-  padding: 0.85rem 3rem;
+  padding: 0.85rem 1.5rem;
   margin-top: 2rem;
   font-size: 1rem;
   font-weight: 500;
