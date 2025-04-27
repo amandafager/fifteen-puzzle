@@ -31,6 +31,11 @@ const StyledTile = styled(Button).withConfig({
   cursor: ${(props) => (props.$canMove ? 'pointer' : 'not-allowed')};
   background-color: ${(props) => (props.$canMove ? '#000000bf' : '#000000d9')};
   border-radius: 0.1em;
+
+  &:hover {
+    transform: ${(props) => (props.$canMove ? 'translateY(-0.1rem)' : 'none')};
+  }
+
   &:disabled {
     cursor: default;
     background-color: transparent;
