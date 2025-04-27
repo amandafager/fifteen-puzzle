@@ -10,11 +10,24 @@ import styledComponentsConfig from 'eslint-plugin-styled-components-config';
 export default tseslint.config(
   { ignores: ['dist'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [
+      ...tseslint.configs.recommendedTypeChecked,
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parser: tseslint.parser,
+      parserOptions: {
+        project: [
+          './tsconfig.json',
+          './tsconfig.app.json',
+          './tsconfig.node.json',
+        ],
+        tsconfigRootDir: process.cwd(),
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
