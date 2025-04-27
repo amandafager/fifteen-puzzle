@@ -25,13 +25,12 @@ const StyledTile = styled(Button).withConfig({
   aspect-ratio: 1 / 1;
   padding: 0;
   margin: 0;
-  /*  font-size: clamp(0.7rem, 2vmin, 1.2rem); */
-  font-weight: bold;
-  color: #fff;
+  font-size: inherit;
+  font-weight: 500;
+  color: #ffffff;
   cursor: ${(props) => (props.$canMove ? 'pointer' : 'not-allowed')};
-  background-color: ${(props) =>
-    props.$canMove ? 'rgba(1, 1, 1, 0.75)' : 'rgba(1, 1, 1, 0.85)'};
-
+  background-color: ${(props) => (props.$canMove ? '#000000bf' : '#000000d9')};
+  border-radius: 0.1em;
   &:disabled {
     cursor: default;
     background-color: transparent;
