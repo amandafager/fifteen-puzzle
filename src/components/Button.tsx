@@ -3,13 +3,13 @@ import { styled } from 'styled-components';
 export const Button = styled.button.withConfig({
   displayName: 'Button',
 })`
-  padding: 1rem 3rem;
+  padding: 0.85rem 3rem;
   margin-top: 2rem;
   font-size: 1rem;
-  font-weight: bold;
-  color: white;
+  font-weight: 500;
+  color: #ffffff;
   cursor: pointer;
-  background-color: rgba(1, 1, 1, 0.75);
+  background-color: #000000bf;
   border: none;
   border-radius: 0.2rem;
   transition:
@@ -17,12 +17,12 @@ export const Button = styled.button.withConfig({
     transform 0.2s ease;
 
   &:hover {
-    background-color: rgba(1, 1, 1, 0.85);
+    background-color: #000000d9;
     transform: translateY(-0.1rem);
   }
 
   &:active {
-    background-color: rgba(1, 1, 1, 0.95);
+    background-color: #000000f2;
   }
 
   &:focus-visible {
@@ -31,7 +31,7 @@ export const Button = styled.button.withConfig({
 
   &:disabled {
     cursor: not-allowed;
-    background-color: rgba(1, 1, 1, 0.5);
+    background-color: #00000080;
   }
 `;
 
