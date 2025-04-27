@@ -1,7 +1,7 @@
 import { type GridConfig, isValidDimension } from '@/types/game';
 
-const rows = 2;
-const cols = 2;
+const rows = 4;
+const cols = 4;
 
 if (!isValidDimension(rows) || !isValidDimension(cols)) {
   throw new Error('Grid dimensions must be greater than 1');
