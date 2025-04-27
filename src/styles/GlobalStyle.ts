@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
         url('/fonts/OpenSans-Italic.woff') format('woff');
     font-display: swap;
   }
-    
+  
   :root {
     width: 100%;
     font-family: 'Open Sans', system-ui, sans-serif;
