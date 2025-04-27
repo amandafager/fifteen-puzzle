@@ -5,6 +5,7 @@ import { generateSolvablePuzzle } from '@/utils/puzzleGenerator';
 import { GRID_CONFIG } from '@/config/gameConfig';
 import type { TileValue } from '@/types/game';
 import Button from '@/components/Button';
+import Modal from '@/components/Modal';
 import {
   checkIfPuzzleIsSolved,
   canTileMove,
@@ -58,7 +59,11 @@ const GameGrid = styled.div.withConfig({
     ${(props) => props.$cols * 60}px
   );
   --grid-padding: 0.3em;
-  --content-width: calc(var(--total-width) - (var(--grid-padding) * 2));
+  --grid-gap: 0.2em;
+  --content-width: calc(
+    var(--total-width) - (var(--grid-padding) * 2) - var(--grid-gap) *
+      (${(props) => props.$cols} - 1)
+  );
   --font-size: calc(
     var(--total-width) /
       (
@@ -70,11 +75,12 @@ const GameGrid = styled.div.withConfig({
   display: grid;
   grid-template-rows: repeat(${(props) => props.$rows}, 1fr);
   grid-template-columns: repeat(${(props) => props.$cols}, 1fr);
-  gap: 0.2em;
+  gap: var(--grid-gap);
   width: var(--total-width);
   height: calc(
     var(--content-width) * ${(props) => props.$rows / props.$cols} +
-      (var(--grid-padding) * 2)
+      (var(--grid-padding) * 2) +
+      (var(--grid-gap) * (${(props) => props.$rows} - 1))
   );
   padding: var(--grid-padding);
   font-size: var(--font-size);
@@ -91,13 +97,14 @@ const GameGrid = styled.div.withConfig({
     width: var(--total-width);
     height: calc(
       var(--content-width) * ${(props) => props.$rows / props.$cols} +
-        (var(--grid-padding) * 2)
+        (var(--grid-padding) * 2) +
+        (var(--grid-gap) * (${(props) => props.$rows} - 1))
     );
   }
 `;
 
 const Game = () => {
-  const [isSolved, setIsSolved] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [tiles, setTiles] = useState<TileValue[]>(() => {
     const initialTiles = generateSolvablePuzzle(
       GRID_CONFIG.rows,
@@ -120,10 +127,9 @@ const Game = () => {
     setTiles(newTiles);
     logPuzzleAnalysis(newTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
 
-    const isSolved = checkIfPuzzleIsSolved(newTiles);
-    if (isSolved) {
-      setIsSolved(true);
-      console.log('Congratulations! Puzzle solved!');
+    const puzzleSolved = checkIfPuzzleIsSolved(newTiles);
+    if (puzzleSolved) {
+      setIsModalOpen(true);
     }
   };
 
@@ -131,7 +137,15 @@ const Game = () => {
     const newTiles = generateSolvablePuzzle(GRID_CONFIG.rows, GRID_CONFIG.cols);
     setTiles(newTiles);
     logPuzzleAnalysis(newTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
-    setIsSolved(false);
+  };
+
+  const handleCloseModal = (): void => {
+    setIsModalOpen(false);
+  };
+
+  const handleRestart = (): void => {
+    handleOnClickShuffle();
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -142,7 +156,6 @@ const Game = () => {
   return (
     <StyledGame>
       <Heading>React - n-puzzle</Heading>
-      {isSolved && <h2>Puzzle solved!</h2>}
       <GameGrid $cols={GRID_CONFIG.cols} $rows={GRID_CONFIG.rows}>
         {tiles.map((tile, index) => (
           <Tile
@@ -154,6 +167,11 @@ const Game = () => {
         ))}
       </GameGrid>
       <Button onClick={handleOnClickShuffle}>Slumpa</Button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onRestart={handleRestart}
+      />
     </StyledGame>
   );
 };
