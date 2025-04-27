@@ -1,54 +1,110 @@
-# React + TypeScript + Vite
+# React n-puzzle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sliding puzzle game built with React, TypeScript, and Vite. The game features a configurable grid size where players can slide numbered tiles to arrange them in numerical order.
 
-Currently, two official plugins are available:
+## Game Rules & Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Mechanics
 
-## Expanding the ESLint configuration
+- Tiles are numbered from 1 upwards
+- Exactly one empty space in the grid
+- Click any tile in the same row or column as the empty space to move it
+- When clicking a tile, all tiles between it and the empty space will move one step towards the empty space
+- Win condition: Arrange all tiles in numerical order
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### UI Requirements
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Responsive design for mobile, tablet, and desktop
+- Uses Open Sans font from Google Fonts
+- Clear victory message when puzzle is solved
+- Shuffle button to randomize tile positions
+- Randomized initial tile positions (always solvable)
+
+## Features
+
+- Configurable grid size (default 4x4)
+- Responsive design that works on mobile, tablet, desktop
+- Type-safe implementation with TypeScript
+- Styled with styled-components
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/react-n-puzzle.git
+cd react-n-puzzle
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+The game will be available at `http://localhost:5173`
+
+## Configuration
+
+### Grid Size
+
+You can configure the puzzle grid size by modifying `src/config/gameConfig.ts`:
+
+```typescript
+export const GRID_CONFIG: GridConfig = {
+  rows: 4, // Change number of rows
+  cols: 4, // Change number of columns
+} as const;
+```
+
+### Styling
+
+The game uses styled-components for styling. Main style configurations:
+
+- Game grid: `src/components/Game.tsx`
+- Tiles: `src/components/Tile.tsx`
+- Buttons: `src/components/Button.tsx`
+- Global styles: `src/styles/GlobalStyle.ts`
+
+### Game Logic
+
+Core game logic is split into several utility files:
+
+- `src/utils/puzzleGenerator.ts`: Generates solvable puzzle configurations
+- `src/utils/gameLogic.ts`: Handles game moves and win conditions
+- `src/utils/debug.ts`: Debugging utilities
+
+Key functionalities:
+
+- Solvable puzzle generation
+- Multi-tile movement logic
+- Win condition checking
+- Shuffle functionality
+
+## Development
+
+### Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build
+- `npm run lint`: Run ESLint
+- `npm run format`: Format code with Prettier
+
+### Tech Stack
+
+- React 18
+- TypeScript
+- Vite
+- styled-components
+- ESLint + Prettier
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
