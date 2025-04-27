@@ -2,6 +2,8 @@
 
 A sliding puzzle game built with React, TypeScript, and Vite. The game features a configurable grid size where players can slide numbered tiles to arrange them in numerical order.
 
+Try it live at: [https://react-n-puzzle.vercel.app/](https://react-n-puzzle.vercel.app/)
+
 ## Game Rules & Requirements
 
 ### Core Mechanics
@@ -104,6 +106,10 @@ Key functionalities:
 - Vite
 - styled-components
 - ESLint + Prettier
+
+### Deployment
+
+The game is deployed on Vercel and automatically updates when changes are pushed to the main branch.
 
 ## License
 
