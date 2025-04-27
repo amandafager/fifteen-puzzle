@@ -56,7 +56,7 @@ const GameGrid = styled.div.withConfig({
   --total-width: min(
     calc(100vw - 40px),
     50vh,
-    ${(props) => props.$cols * 60}px
+    ${(props) => props.$cols * 90}px
   );
   --grid-padding: 0.3em;
   --grid-gap: 0.2em;
@@ -87,18 +87,11 @@ const GameGrid = styled.div.withConfig({
   background-color: #dadada;
   border-radius: 0.1em;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     --total-width: min(
       calc(100vw - 80px),
-      50vh,
-      ${(props) => props.$cols * 75}px
-    );
-
-    width: var(--total-width);
-    height: calc(
-      var(--content-width) * ${(props) => props.$rows / props.$cols} +
-        (var(--grid-padding) * 2) +
-        (var(--grid-gap) * (${(props) => props.$rows} - 1))
+      80vh,
+      ${(props) => props.$cols * 80}px
     );
   }
 `;

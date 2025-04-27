@@ -19,9 +19,9 @@ const StyledTile = styled(Button).withConfig({
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 60px;
+  max-width: 90px;
   height: 100%;
-  max-height: 60px;
+  max-height: 90px;
   aspect-ratio: 1 / 1;
   padding: 0;
   margin: 0;
@@ -38,11 +38,11 @@ const StyledTile = styled(Button).withConfig({
     transform: none;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     width: 100%;
-    max-width: 75px;
+    max-width: 80px;
     height: 100%;
-    max-height: 75px;
+    max-height: 80px;
   }
 `;
 
