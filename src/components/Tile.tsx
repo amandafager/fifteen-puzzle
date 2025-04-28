@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { TileValue } from '@/types/game';
-import { Button } from './Button';
+import StyledButton from './Button';
 
 type StyledTileProps = {
   $canMove: boolean;
@@ -12,7 +12,7 @@ interface TileProps {
   onClick: () => void;
 }
 
-const StyledTile = styled(Button).withConfig({
+const StyledTile = styled(StyledButton).withConfig({
   displayName: 'Tile',
 })<StyledTileProps>`
   display: flex;
@@ -58,8 +58,8 @@ const Tile = ({ value, canMove, onClick }: TileProps) => {
   return (
     <StyledTile
       $canMove={canMove}
-      onClick={canMove ? onClick : undefined}
-      disabled={value === null}
+      onPress={canMove ? onClick : undefined}
+      isDisabled={value === null}
       aria-label={value ? `Tile ${value}` : 'Empty tile'}
     >
       {value}

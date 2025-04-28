@@ -1,6 +1,7 @@
+import { Button as AriaButton } from 'react-aria-components';
 import { styled } from 'styled-components';
 
-export const Button = styled.button.withConfig({
+const StyledButton = styled(AriaButton).withConfig({
   displayName: 'Button',
 })`
   padding: 0.85rem 1.5rem;
@@ -37,4 +38,4 @@ export const Button = styled.button.withConfig({
   }
 `;
 
-export default Button;
+export default StyledButton;

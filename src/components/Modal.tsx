@@ -1,5 +1,6 @@
+import { Modal as AriaModal, Dialog, Heading } from 'react-aria-components';
 import styled from 'styled-components';
-import Button from './Button';
+import StyledButton from './Button';
 
 interface ModalProps {
   isOpen: boolean;
@@ -7,34 +8,37 @@ interface ModalProps {
   onRestart: () => void;
 }
 
-const ModalOverlay = styled.div.withConfig({
-  displayName: 'ModalOverlay',
+const StyledDialog = styled(Dialog).withConfig({
+  displayName: 'StyledDialog',
+})`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  width: calc(100% - 2.5rem);
+  max-width: 25rem;
+  padding: 1.5rem;
+  text-align: center;
+  outline: none;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+`;
+
+const Overlay = styled.div.withConfig({
+  displayName: 'Overlay',
 })`
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const ModalContent = styled.div.withConfig({
-  displayName: 'ModalContent',
-})`
-  max-width: 90%;
-  padding: 2rem;
-  text-align: center;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h2.withConfig({
-  displayName: 'Title',
+const StyledHeading = styled(Heading).withConfig({
+  displayName: 'StyledHeading',
 })`
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
@@ -56,25 +60,28 @@ const ButtonContainer = styled.div.withConfig({
   gap: 1rem;
   justify-content: center;
 
-  ${Button} {
+  ${StyledButton} {
     margin-top: 0;
   }
 `;
 
 const Modal = ({ isOpen, onClose, onRestart }: ModalProps) => {
-  if (!isOpen) return null;
-
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <Title>Grattis!</Title>
+    <AriaModal
+      isOpen={isOpen}
+      onOpenChange={(isOpen: boolean) => !isOpen && onClose()}
+      isDismissable
+    >
+      {isOpen && <Overlay />}
+      <StyledDialog>
+        <StyledHeading slot="title">Grattis!</StyledHeading>
         <Message>Du har löst pusslet!</Message>
         <ButtonContainer>
-          <Button onClick={onRestart}>Starta om</Button>
-          <Button onClick={onClose}>Stäng</Button>
+          <StyledButton onPress={onRestart}>Starta om</StyledButton>
+          <StyledButton onPress={onClose}>Stäng</StyledButton>
         </ButtonContainer>
-      </ModalContent>
-    </ModalOverlay>
+      </StyledDialog>
+    </AriaModal>
   );
 };
 
