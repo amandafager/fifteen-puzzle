@@ -53,17 +53,46 @@ const Heading = styled.h1.withConfig({
 const GameGrid = styled.div.withConfig({
   displayName: 'GameGrid',
 })<GameGridProps>`
+  /* 
+   * Grid Layout Configuration
+   *
+   * The grid scales responsively based on three constraints:
+   * 1. Maximum viewport width (100vw - 40px padding)
+   * 2. Maximum 50% of viewport height
+   * 3. Maximum size based on number of columns (90px per column)
+   */
+  --max-viewport-width: calc(100vw - 40px);
+  --max-height-based: 50vh;
+  --max-cols-based: ${(props) => props.$cols * 90}px;
   --total-width: min(
-    calc(100vw - 40px),
-    50vh,
-    ${(props) => props.$cols * 90}px
+    var(--max-viewport-width),
+    var(--max-height-based),
+    var(--max-cols-based)
   );
   --grid-padding: 0.3em;
   --grid-gap: 0.2em;
+
+  /* 
+   * Calculate actual content width by subtracting padding and gaps
+   * Formula: total width - (2 * padding) - (gaps * (columns - 1))
+   */
   --content-width: calc(
-    var(--total-width) - (var(--grid-padding) * 2) - var(--grid-gap) *
-      (${(props) => props.$cols} - 1)
+    var(--total-width) - (2 * var(--grid-padding)) -
+      (var(--grid-gap) * (${(props) => props.$cols} - 1))
   );
+
+  /*
+   * Dynamically calculates the font size based on the total width and the number of tiles.
+   * 
+   * Formula breakdown:
+   * - Total number of tiles = rows * columns
+   * - Logarithmic scaling (log10) is applied to the total number of tiles
+   *   to prevent the font size from shrinking too quickly as tile count grows.
+   * - The base factor (2 + log10(total tiles)) ensures a minimum scaling.
+   * - Font size = total width divided by (columns * (2 + log10(total tiles))).
+   *
+   * This keeps the text readable even as the grid becomes very large.
+   */
   --font-size: calc(
     var(--total-width) /
       (
@@ -77,11 +106,19 @@ const GameGrid = styled.div.withConfig({
   grid-template-columns: repeat(${(props) => props.$cols}, 1fr);
   gap: var(--grid-gap);
   width: var(--total-width);
+
+  /* 
+   * Height calculation
+   * Maintains aspect ratio based on:
+   * - Content width adjusted by rows/columns ratio
+   * - Adding padding and gaps
+   */
   height: calc(
-    var(--content-width) * ${(props) => props.$rows / props.$cols} +
-      (var(--grid-padding) * 2) +
+    (var(--content-width) * ${(props) => props.$rows / props.$cols}) +
+      (2 * var(--grid-padding)) +
       (var(--grid-gap) * (${(props) => props.$rows} - 1))
   );
+
   padding: var(--grid-padding);
   font-size: var(--font-size);
   background-color: #dadada;
@@ -141,6 +178,7 @@ const Game = () => {
     setIsModalOpen(false);
   };
 
+  // Only for resetting the puzzle when the grid size changes in the config
   useEffect(() => {
     setTiles(generateSolvablePuzzle(GRID_CONFIG.rows, GRID_CONFIG.cols));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,14 +190,16 @@ const Game = () => {
       <GameGrid $cols={GRID_CONFIG.cols} $rows={GRID_CONFIG.rows}>
         {tiles.map((tile, index) => (
           <Tile
-            key={tile ? `tile-${tile}` : `empty-${index}`}
+            key={tile ? `tile-${tile}` : 'empty-tile'}
             value={tile}
             canMove={canTileMove(index, tiles)}
             onClick={() => handleOnClickTile(index)}
           />
         ))}
       </GameGrid>
-      <Button onClick={handleOnClickShuffle}>Slumpa</Button>
+      <Button type="button" onClick={handleOnClickShuffle}>
+        Slumpa
+      </Button>
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
