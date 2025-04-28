@@ -27,8 +27,8 @@ const StyledGame = styled.div.withConfig({
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 1rem 0;
   overflow: auto;
-  font-size: 1.5rem;
 `;
 
 const Heading = styled.h1.withConfig({
@@ -56,11 +56,11 @@ const GameGrid = styled.div.withConfig({
    * Grid Layout Configuration
    *
    * The grid scales responsively based on three constraints:
-   * 1. Maximum viewport width (100vw - 40px padding)
+   * 1. Maximum viewport width (100vw - 2.5rem padding)
    * 2. Maximum 50% of viewport height
    * 3. Maximum size based on number of columns (90px per column)
    */
-  --max-viewport-width: calc(100vw - 40px);
+  --max-viewport-width: calc(100vw - 2.5rem);
   --max-height-based: 50vh;
   --max-cols-based: ${(props) => props.$cols * 90}px;
   --total-width: min(
@@ -125,7 +125,7 @@ const GameGrid = styled.div.withConfig({
 
   @media (min-width: 768px) {
     --total-width: min(
-      calc(100vw - 80px),
+      calc(100vw - 5rem),
       80vh,
       ${(props) => props.$cols * 80}px
     );
