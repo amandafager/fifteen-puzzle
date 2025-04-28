@@ -21,6 +21,7 @@ Try it live at: [https://react-n-puzzle.vercel.app/](https://react-n-puzzle.verc
 - Clear victory message when puzzle is solved
 - Shuffle button to randomize tile positions
 - Randomized initial tile positions (always solvable)
+- Full keyboard navigation and screen reader support using react-aria-components
 
 ## Features
 
@@ -28,6 +29,9 @@ Try it live at: [https://react-n-puzzle.vercel.app/](https://react-n-puzzle.verc
 - Responsive design that works on mobile, tablet, desktop
 - Type-safe implementation with TypeScript
 - Styled with styled-components
+- Accessible UI components built with react-aria-components
+- Full keyboard navigation support
+- Screen reader friendly with ARIA labels and announcements
 
 ## Installation
 
@@ -105,6 +109,7 @@ Key functionalities:
 - TypeScript
 - Vite
 - styled-components
+- react-aria-components for accessibility
 - ESLint + Prettier
 
 ### Deployment
