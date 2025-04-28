@@ -1,4 +1,5 @@
 import type { TileValue } from '@/types/game';
+import { logPuzzleAnalysis } from './debug';
 
 // Calculates the number of inversions in a sliding puzzle board.
 // An inversion is a pair of tiles (a, b) such that a appears before b,
@@ -60,7 +61,8 @@ export const shuffleTiles = (array: TileValue[]): TileValue[] => {
 // If the puzzle is not solvable, it shuffles again until it is.
 export const generateSolvablePuzzle = (
   rows: number,
-  cols: number
+  cols: number,
+  options: { debug?: boolean } = {}
 ): TileValue[] => {
   const tiles = generateTiles(rows, cols);
   let shuffled: TileValue[];
@@ -69,5 +71,9 @@ export const generateSolvablePuzzle = (
     shuffled = shuffleTiles(tiles);
   } while (!isSolvable(shuffled, rows, cols));
 
+  // Only for debugging purposes
+  if (options.debug) {
+    logPuzzleAnalysis(shuffled, rows, cols);
+  }
   return shuffled;
 };

@@ -13,7 +13,6 @@ import {
   moveTiles,
   findEmptyTileIndex,
 } from '@/utils/gameLogic';
-import { logPuzzleAnalysis } from '@/utils/debug';
 
 type GameGridProps = {
   $cols: number;
@@ -140,7 +139,6 @@ const Game = () => {
       GRID_CONFIG.rows,
       GRID_CONFIG.cols
     );
-    logPuzzleAnalysis(initialTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
     return initialTiles;
   });
 
@@ -155,7 +153,6 @@ const Game = () => {
     moveTiles(newTiles, tilesToMove, isForward);
 
     setTiles(newTiles);
-    logPuzzleAnalysis(newTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
 
     const puzzleSolved = checkIfPuzzleIsSolved(newTiles);
     if (puzzleSolved) {
@@ -166,7 +163,6 @@ const Game = () => {
   const handleOnClickShuffle = (): void => {
     const newTiles = generateSolvablePuzzle(GRID_CONFIG.rows, GRID_CONFIG.cols);
     setTiles(newTiles);
-    logPuzzleAnalysis(newTiles, GRID_CONFIG.rows, GRID_CONFIG.cols);
   };
 
   const handleCloseModal = (): void => {
