@@ -33,7 +33,10 @@ const StyledTile = styled(Button).withConfig({
   border-radius: 0.1em;
 
   &:hover {
-    transform: ${(props) => (props.$canMove ? 'translateY(-0.1rem)' : 'none')};
+    @media (hover: hover) {
+      transform: ${(props) =>
+        props.$canMove ? 'translateY(-0.1rem)' : 'none'};
+    }
   }
 
   &:disabled {

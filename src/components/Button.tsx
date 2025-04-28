@@ -18,7 +18,9 @@ export const Button = styled.button.withConfig({
 
   &:hover {
     background-color: #000000d9;
-    transform: translateY(-0.1rem);
+    @media (hover: hover) {
+      transform: translateY(-0.1rem);
+    }
   }
 
   &:active {
