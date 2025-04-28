@@ -90,7 +90,6 @@ const GameGrid = styled.div.withConfig({
    * - The base factor (2 + log10(total tiles)) ensures a minimum scaling.
    * - Font size = total width divided by (columns * (2 + log10(total tiles))).
    *
-   * This keeps the text readable even as the grid becomes very large.
    */
   --font-size: calc(
     var(--total-width) /
