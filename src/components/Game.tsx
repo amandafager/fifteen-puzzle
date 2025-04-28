@@ -126,7 +126,7 @@ const GameGrid = styled.div.withConfig({
   @media (min-width: 768px) {
     --total-width: min(
       calc(100vw - 5rem),
-      80vh,
+      50vh,
       ${(props) => props.$cols * 80}px
     );
   }
